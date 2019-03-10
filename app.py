@@ -277,7 +277,7 @@ def q26():
     session['answers'].append(request.form)
     return render_template('question.html',
                             next=27,
-                            question='Куда Хлестаков написал письмо Хлестакову?',
+                            question='Куда Хлестаков написал письмо Тряпичкину?',
                             hints=[
                                 'Место'
                             ])
