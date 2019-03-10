@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2>Тест по комедии "Ревизор"</h2>
+<form method='POST' action='/{{next}}'>
+    <table>
+        {% for i in question.split('\n') %}
+        <p>{{ i }}</p>
+        {% endfor %}
+        {% for i in hints %}
+        <tr>
+            <td><input name='{{ i }}' type='TEXT' placeholder='{{ i }}'></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><input value='Вперёд!' type='SUBMIT'></p>
+</form>
+{% endblock %}
