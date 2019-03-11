@@ -1,16 +1,14 @@
-from flask import Flask, render_template, request, escape, session, copy_current_request_context
 import random
+from flask import Flask, render_template, request, escape, session, copy_current_request_context
 
+from answers import equal
 app: Flask = Flask(__name__)
-
-def check_answers(answers):
-    return random.randint(0, len(answers) + 1)
 
 @app.route('/')
 @app.route('/0')
 def q0():
     if 'answers' not in session:
-        session['answers'] = []
+        session['answers'] = 0
     return render_template('question.html',
                             next=1,
                             question='По какому произведению Вы проходите викторину? Кто автор произведения?',
@@ -21,7 +19,10 @@ def q0():
 
 @app.route('/1', methods=['POST'])
 def q1():
-    session['answers'].append(request.form)
+    if equal(request.form['Название произведения'], "ревизор"):
+        session['answers'] += 1
+    if equal(request.form['Автор'], "николай васильевич гоголь", "н. в. гоголь", "николай васильевич", "гоголь"):
+        session['answers'] += 1
     return render_template('question.html',
                             next=2,
                             question='Чем берёт взятки судья?',
@@ -31,7 +32,10 @@ def q1():
 
 @app.route('/2', methods=['POST'])
 def q2():
-    session['answers'].append(request.form)
+    if equal(request.form['Чем?'], "борзый щенок"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=3,
                             question='Как зовут Бобчинского?',
@@ -41,7 +45,10 @@ def q2():
 
 @app.route('/3', methods=['POST'])
 def q3():
-    session['answers'].append(request.form)
+    if equal(request.form['Имя'], "петр", "петр иванович"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=4,
                             question='''В тексте "Ревизора" дважды упоминается одна французская опера в пяти актах, поставленная в 1831 году. Первый раз Хлестаков во втором действии насвистывает что-то из неё, потом он же утверждает, что именно он является автором романа, лёгшего в основу либретто этой оперы. Назовите её.''',
@@ -51,7 +58,10 @@ def q3():
 
 @app.route('/4', methods=['POST'])
 def q4():
-    session['answers'].append(request.form)
+    if equal(request.form['Название оперы'], "роберт", "роберт-дьявол"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=5,
                             question='У кого квартальный стянул всю штуку сукна?',
@@ -61,7 +71,10 @@ def q4():
 
 @app.route('/5', methods=['POST'])
 def q5():
-    session['answers'].append(request.form)
+    if equal(request.form['Фамилия'], "черняев"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=6,
                             question='Вставьте пропущенные слова в реплику городничего: "Я раз слушал его: ну, покамест говорил об ... и ...- ещё ничего, а как добрался до Александра Македонского, то я не могу вам сказать, что с ним сделалось"',
@@ -72,7 +85,12 @@ def q5():
 
 @app.route('/6', methods=['POST'])
 def q6():
-    session['answers'].append(request.form)
+    if equal(request.form['Первый пропуск'], "ассирянин"):
+        session['answers'] += 1
+    if equal(request.form['Второй пропуск'], "вавилонянин"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=7,
                             question='Назовите фамилию купца, который не прислал городничему новую шпагу.',
@@ -82,7 +100,10 @@ def q6():
 
 @app.route('/7', methods=['POST'])
 def q7():
-    session['answers'].append(request.form)
+    if equal(request.form['Фамилия'], "абдулов"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=8,
                             question='Сколько Хлестаков взял в долг у Луки Лукича?',
@@ -92,7 +113,9 @@ def q7():
 
 @app.route('/8', methods=['POST'])
 def q8():
-    session['answers'].append(request.form)
+    if equal(request.form['Сумма'], "300", "300 рубль", "триста", "триста рубль"):
+        session['answers'] += 1
+
     return render_template('question.html',
                             next=9,
                             question='Кем работает Ляпкин-Тяпкин?',
@@ -102,7 +125,10 @@ def q8():
 
 @app.route('/9', methods=['POST'])
 def q9():
-    session['answers'].append(request.form)
+    if equal(request.form['Профессия'], "судья"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=10,
                             question='Кто из чиновников или помещиков многодетный? Сколько у него детей?',
@@ -113,7 +139,12 @@ def q9():
 
 @app.route('/10', methods=['POST'])
 def q10():
-    session['answers'].append(request.form)
+    if equal(request.form['Имя'], "артемий", "артемий филиппович", "земляника", "артемий филиппович земляника"):
+        session['answers'] += 1
+    if equal(request.form['Количество детей'], "5", "пять"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=11,
                             question='Кто среди чиновников является доносчиком?',
@@ -123,7 +154,10 @@ def q10():
 
 @app.route('/11', methods=['POST'])
 def q11():
-    session['answers'].append(request.form)
+    if equal(request.form['Имя'], "артемий", "артемий филиппович", "земляника", "артемий филиппович земляника"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=12,
                             question='Назовите грехи городничего.\n(Двух хватит)',
@@ -134,7 +168,12 @@ def q11():
 
 @app.route('/12', methods=['POST'])
 def q12():
-    session['answers'].append(request.form)
+    if equal(request.form['Первый'], "взяточничество", "приём взятка", "взятие взятка", "он брать взятка", "взяточник", "он взяточник", "коррупция"):
+        session['answers'] += 1
+    if equal(request.form['Второй'], "взяточничество", "приём взятка", "взятие взятка", "он брать взятка", "взяточник", "он взяточник", "коррупция"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=13,
                             question='Назовите фамилию Луки Лукича.',
@@ -144,7 +183,10 @@ def q12():
 
 @app.route('/13', methods=['POST'])
 def q13():
-    session['answers'].append(request.form)
+    if equal(request.form['Фамилия'], "шпекин"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=14,
                             question='Назовите чин Луки Лукича\n(Подсказка: чин - это не профессия).',
@@ -154,7 +196,10 @@ def q13():
 
 @app.route('/14', methods=['POST'])
 def q14():
-    session['answers'].append(request.form)
+    if equal(request.form['Чин'], "титулярный советник"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=15,
                             question='Вставьте пропущенное название цвета в фразу Марьи Антоновны:\n"Ах, маменька, Вам нейдёт ...".',
@@ -164,7 +209,10 @@ def q14():
 
 @app.route('/15', methods=['POST'])
 def q15():
-    session['answers'].append(request.form)
+    if equal(request.form['Цвет'], "палевое"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=16,
                             question='А какая фамилия у Марьи Ивановны?',
@@ -174,7 +222,10 @@ def q15():
 
 @app.route('/16', methods=['POST'])
 def q16():
-    session['answers'].append(request.form)
+    if equal(request.form['Фамилия'], "сквозник-дмухановский"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=17,
                             question='Когда Бобчинский, рассказывая о первой встресе с Хлестаковым, говорит о том,что он встретился с Петром Ивановичем, Добчинский его перебивает и называет точное место встречи - это будка. А что в ней продавалось?',
@@ -184,7 +235,10 @@ def q16():
 
 @app.route('/17', methods=['POST'])
 def q17():
-    session['answers'].append(request.form)
+    if equal(request.form['Товар'], "пирог"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=18,
                             question='Какую рыбу ели Петры Ивановичи в трактире, в котором жил Хлестаков в начале комедии.',
@@ -194,7 +248,10 @@ def q17():
 
 @app.route('/18', methods=['POST'])
 def q18():
-    session['answers'].append(request.form)
+    if equal(request.form['Название рыбы'], "семга"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=19,
                             question='Как звали трактирщика?',
@@ -204,7 +261,10 @@ def q18():
 
 @app.route('/19', methods=['POST'])
 def q19():
-    session['answers'].append(request.form)
+    if equal(request.form['Имя'], "стас"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=20,
                             question='В день какого выдуманного Гоголем святого в город приехал Хлестаков?',
@@ -214,7 +274,10 @@ def q19():
 
 @app.route('/20', methods=['POST'])
 def q20():
-    session['answers'].append(request.form)
+    if equal(request.form['Имя'], "василий египтянин"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=21,
                             question='Во сколько рублей обходится арбуз на балах Хлестакова?\n(По словам самого Хлестакова)',
@@ -224,7 +287,10 @@ def q20():
 
 @app.route('/21', methods=['POST'])
 def q21():
-    session['answers'].append(request.form)
+    if equal(request.form['Цена'], "700", "700 рубль", "семьсот", "семьсот рубль"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=22,
                             question='Что, кроме супа, принесли Хлестакову в трактире, когда обещали, что это будет последний обед, пока он не заплатит?',
@@ -234,7 +300,10 @@ def q21():
 
 @app.route('/22', methods=['POST'])
 def q22():
-    session['answers'].append(request.form)
+    if equal(request.form['Название блюда'], "жаркое"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=23,
                             question='Кто в немой сцене стоит "посередине, в виде столба, с распростертыми руками и запрокинутой назад головою"?',
@@ -244,7 +313,10 @@ def q22():
 
 @app.route('/23', methods=['POST'])
 def q23():
-    session['answers'].append(request.form)
+    if equal(request.form['Кто?'], "городничий", "антон антонович", "сквозник-дмухановский", "антон антонович сквозник-дмухановский"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=24,
                             question='По мнению Земляники смотритель училища хуже, чем ...',
@@ -254,7 +326,10 @@ def q23():
 
 @app.route('/24', methods=['POST'])
 def q24():
-    session['answers'].append(request.form)
+    if equal(request.form['Кто?'], "якобинец"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=25,
                             question='Кто сказал: "Я прошу вас покорнейше, как поедете в Петербург, скажите всем там вельможам разным: сенаторам и адмиралам, что вот, живет в таком-то городе .... Так и скажите: живет ...."',
@@ -264,7 +339,10 @@ def q24():
 
 @app.route('/25', methods=['POST'])
 def q25():
-    session['answers'].append(request.form)
+    if equal(request.form['Фамилия'], "бобчинский"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=26,
                             question='Именное повеление - чье?',
@@ -274,7 +352,10 @@ def q25():
 
 @app.route('/26', methods=['POST'])
 def q26():
-    session['answers'].append(request.form)
+    if equal(request.form['Чье?'], "император"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=27,
                             question='Куда Хлестаков написал письмо Тряпичкину?',
@@ -284,7 +365,10 @@ def q26():
 
 @app.route('/27', methods=['POST'])
 def q27():
-    session['answers'].append(request.form)
+    if equal(request.form['Место'], "почтамтский", "в почтамтский", "на почтамтский"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=28,
                             question='Возможный прообраз Хлестакова.',
@@ -294,7 +378,10 @@ def q27():
 
 @app.route('/28', methods=['POST'])
 def q28():
-    session['answers'].append(request.form)
+    if equal(request.form['Фамилия'], "пушкин", "свиньин"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=29,
                             question='Кто сказал "Так уж сделайте такую милость, ваше сиятельство. Если уже вы, то есть, не поможете в нашей просьбе, то уж не знаем, как и быть: просто хоть в петлю полезай"',
@@ -304,18 +391,26 @@ def q28():
 
 @app.route('/29', methods=['POST'])
 def q29():
-    session['answers'].append(request.form)
+    if equal(request.form['Профессия'], "купцы"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=30,
                             question='Из какого города едет Хлестаков? В какой?',
                             hints=[
-                                'Откуда',
-                                'Куда'
+                                'Откуда?',
+                                'Куда?'
                             ])
 
 @app.route('/30', methods=['POST'])
 def q30():
-    session['answers'].append(request.form)
+    if equal(request.form['Откуда?'], "петербург", "из петербург", "из санкт-петербург", "санкт-петербург"):
+        session['answers'] += 1
+    if equal(request.form['Куда?'], "саратовская губерния", "в саратовская губерния", "в подкатиловка", "подкатиловка"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=31,
                             question='Сам не подозревая того, своим враньем Хлестаков выдал себя за...',
@@ -325,7 +420,10 @@ def q30():
 
 @app.route('/31', methods=['POST'])
 def q31():
-    session['answers'].append(request.form)
+    if equal(request.form['Чин'], "разведчик", "за разведчик"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=32,
                             question='Городничий и Хлестаков говорят об одном и том же при их первой встрече?',
@@ -335,7 +433,10 @@ def q31():
 
 @app.route('/32', methods=['POST'])
 def q32():
-    session['answers'].append(request.form)
+    if equal(request.form['Да/нет'], "да"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=33,
                             question='Кто из чиновников является масоном?',
@@ -345,7 +446,10 @@ def q32():
 
 @app.route('/33', methods=['POST'])
 def q33():
-    session['answers'].append(request.form)
+    if equal(request.form['Фамилия'], "ляпкин-тяпкин"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=34,
                             question='Хлестаков получил взаймы больше ... рублей',
@@ -355,7 +459,10 @@ def q33():
 
 @app.route('/34', methods=['POST'])
 def q34():
-    session['answers'].append(request.form)
+    if equal(request.form['Сумма'], "1000", "1000 рублей", "тысяча", "тысяча рублей"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next=35,
                             question='Скольких губернаторов обманул городничий?',
@@ -365,7 +472,10 @@ def q34():
 
 @app.route('/35', methods=['POST'])
 def q35():
-    session['answers'].append(request.form)
+    if equal(request.form['Число'], "3", "три"):
+        session['answers'] += 1
+    print(session['answers'])
+
     return render_template('question.html',
                             next='results',
                             question='Сколько лет провел на службе Антон Антонович',
@@ -375,11 +485,15 @@ def q35():
 
 @app.route('/results', methods=['POST'])
 def results():
-    session['answers'].append(request.form)
+    if equal(request.form['Число'], "30", "тридцать", "тридцать лет", "30 лет"):
+        session['answers'] += 1
+    score = session['answers']
+    session['answers'] = 0
+
     return render_template('results.html',
-                            right=check_answers(session['answers']),
+                            right=score,
                             all=36,
-                            comment='Чебурек')
+                            comment='')
 
 app.secret_key = 'YouWillNeverGuessMySecretKey'
 

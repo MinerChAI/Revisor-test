@@ -2,23 +2,19 @@ import pymorphy2
 
 morph = pymorphy2.MorphAnalyzer()
 
-def NormalAnswer(answer) -> str:
-    answer = answer.replace('"', '')
-    answers = answer.split()
-    answers = [morph.parse(i)[0].normal_form for i in answers]
-    answer = ' '.join(answers)
-    answer = answer.replace('ё', 'е')
-    return(answer)
+def NormalAnswer(answer: str) -> str:
+    return ' '.join([morph.parse(i)[0].normal_form for i in answer.replace('"', '').split()]).replace('ё', 'е')
 
 
 def equal(answer: str, *right_answers) -> bool:
-    return answer in right_answers
+    return NormalAnswer(answer) in right_answers
 
 
-def ScoresCount(questions) -> int:
+def ScoresCount(questions: list) -> int:
+    return questions
     scores = 0
     for j in questions:
-        for i in questions[j].values():
+        for i in j.values():
             i = NormalAnswer(i)
     if equal(questions[0]['Название произведения'], "ревизор"):
         scores += 1
