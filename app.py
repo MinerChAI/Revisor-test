@@ -215,7 +215,7 @@ def q15():
 
     return render_template('question.html',
                             next=16,
-                            question='А какая фамилия у Марьи Ивановны?',
+                            question='А какая фамилия у Марьи Антоновны?',
                             hints=[
                                 'Фамилия'
                             ])
