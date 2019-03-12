@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, escape, session, copy_current_request_context
 import git
 from answers import equal
-
+# LOL
 app: Flask = Flask(__name__)
 
 @app.route('/')
