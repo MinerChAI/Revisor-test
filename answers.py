@@ -6,7 +6,7 @@ def NormalAnswer(answer: str) -> str:
     return ' '.join([morph.parse(i)[0].normal_form for i in answer.replace('"', '').split()]).replace('ё', 'е')
 
 
-def equal(answer: str, *right_answers) -> bool:
+def equal(answer: str, *right_answers) -> bool: # Эта функция сравнивает ответ и правильные ответы
     return NormalAnswer(answer) in right_answers
 
 
