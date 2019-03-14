@@ -505,7 +505,7 @@ def webhook():
         origin = repo.remotes.origin
         repo.create_head('master',
     origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
-        origin.pull()
+        origin.pull() # Test
         return '', 200
     else:
         return '', 400
