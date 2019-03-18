@@ -492,7 +492,7 @@ def results():
 
     return render_template('results.html',
                             right=score,
-                            all=36,
+                            all=40,
                             comment='')
 
 @app.route('/webhook', methods=['POST'])
