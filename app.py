@@ -71,7 +71,7 @@ def q4():
 
 @app.route('/5', methods=['POST'])
 def q5():
-    if equal(request.form['Фамилия'], "черняев"):
+    if equal(request.form['Фамилия'], "черняев", "у черняев"):
         session['answers'] += 1
     print(session['answers'])
 
@@ -274,7 +274,7 @@ def q19():
 
 @app.route('/20', methods=['POST'])
 def q20():
-    if equal(request.form['Имя'], "василий египтянин"):
+    if equal(request.form['Имя'], "василий египтянин", "василий"):
         session['answers'] += 1
     print(session['answers'])
 
