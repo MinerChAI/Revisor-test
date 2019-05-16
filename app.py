@@ -20,9 +20,9 @@ def q0():
 @app.route('/1', methods=['POST'])
 def q1():
     if equal(request.form['Название произведения'], "ревизор"):
-        session['answers'] += .5
+        session['answers'] += 1
     if equal(request.form['Автор'], "николай васильевич гоголь", "н. в. гоголь", "николай васильевич", "гоголь"):
-        session['answers'] += .5
+        session['answers'] += 1
     return render_template('question.html',
                             next=2,
                             question='Чем берёт взятки судья?',
@@ -86,9 +86,9 @@ def q5():
 @app.route('/6', methods=['POST'])
 def q6():
     if equal(request.form['Первый пропуск'], "ассирянин"):
-        session['answers'] += .5
+        session['answers'] += 1
     if equal(request.form['Второй пропуск'], "вавилонянин"):
-        session['answers'] += .5
+        session['answers'] += 
     print(session['answers'])
 
     return render_template('question.html',
@@ -140,9 +140,9 @@ def q9():
 @app.route('/10', methods=['POST'])
 def q10():
     if equal(request.form['Имя'], "артемий", "артемий филиппович", "земляника", "артемий филиппович земляника"):
-        session['answers'] += .5
+        session['answers'] += 1
     if equal(request.form['Количество детей'], "5", "пять"):
-        session['answers'] += .5
+        session['answers'] += 1
     print(session['answers'])
 
     return render_template('question.html',
@@ -169,9 +169,9 @@ def q11():
 @app.route('/12', methods=['POST'])
 def q12():
     if equal(request.form['Первый'], "взяточничество", "приём взятка", "взятие взятка", "он брать взятка", "взяточник", "он взяточник", "коррупция"):
-        session['answers'] += .5
+        session['answers'] += 1
     if equal(request.form['Второй'], "взяточничество", "приём взятка", "взятие взятка", "он брать взятка", "взяточник", "он взяточник", "коррупция"):
-        session['answers'] += .5
+        session['answers'] += 1
     print(session['answers'])
 
     return render_template('question.html',
@@ -406,9 +406,9 @@ def q29():
 @app.route('/30', methods=['POST'])
 def q30():
     if equal(request.form['Откуда?'], "петербург", "из петербург", "из санкт-петербург", "санкт-петербург"):
-        session['answers'] += .5
+        session['answers'] += 1
     if equal(request.form['Куда?'], "саратовская губерния", "в саратовская губерния", "в подкатиловка", "подкатиловка"):
-        session['answers'] += .5
+        session['answers'] += 1
     print(session['answers'])
 
     return render_template('question.html',
