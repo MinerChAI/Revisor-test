@@ -98,7 +98,7 @@ def q6():
     if equal(request.form['Первый пропуск'], "ассирянин"):
         session['answers'] += 1
     if equal(request.form['Второй пропуск'], "вавилонянин"):
-        session['answers'] +=
+        session['answers'] += 1
     print(session['answers'])
 
     return render_template('question.html',
