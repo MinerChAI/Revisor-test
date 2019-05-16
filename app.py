@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, escape, session, copy_current_request_context
 import git
 from answers import equal
-# LOL
+
 app: Flask = Flask(__name__)
 
 @app.route('/')
@@ -509,6 +509,13 @@ def webhook():
         return '', 200
     else:
         return '', 400
+
+@app.route('/version')
+def get_version():
+    '''
+    Gets hash of last commit
+    '''
+    return git.Repo('./mysite').head.commit.hexsha
 
 app.secret_key = 'YouWillNeverGuessMySecretKey'
 
