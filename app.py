@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, escape, session, copy_current_request_context
+import requests
+import threading
+import os
 import git
 from answers import equal
 
 app: Flask = Flask(__name__)
+
 
 @app.route('/')
 @app.route('/0')
@@ -10,12 +14,13 @@ def q0():
     if 'answers' not in session:
         session['answers'] = 0
     return render_template('question.html',
-                            next=1,
-                            question='По какому произведению Вы проходите викторину? Кто автор произведения?',
-                            hints=[
-                                'Название произведения',
-                                'Автор'
-                            ])
+                           next=1,
+                           question='По какому произведению Вы проходите викторину? Кто автор произведения?',
+                           hints=[
+                               'Название произведения',
+                               'Автор'
+                           ])
+
 
 @app.route('/1', methods=['POST'])
 def q1():
@@ -24,11 +29,12 @@ def q1():
     if equal(request.form['Автор'], "николай васильевич гоголь", "н. в. гоголь", "николай васильевич", "гоголь"):
         session['answers'] += 1
     return render_template('question.html',
-                            next=2,
-                            question='Чем берёт взятки судья?',
-                            hints=[
-                                'Чем?'
-                            ])
+                           next=2,
+                           question='Чем берёт взятки судья?',
+                           hints=[
+                               'Чем?'
+                           ])
+
 
 @app.route('/2', methods=['POST'])
 def q2():
@@ -37,11 +43,12 @@ def q2():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=3,
-                            question='Как зовут Бобчинского?',
-                            hints=[
-                                'Имя'
-                            ])
+                           next=3,
+                           question='Как зовут Бобчинского?',
+                           hints=[
+                               'Имя'
+                           ])
+
 
 @app.route('/3', methods=['POST'])
 def q3():
@@ -50,11 +57,12 @@ def q3():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=4,
-                            question='''В тексте "Ревизора" дважды упоминается одна французская опера в пяти актах, поставленная в 1831 году. Первый раз Хлестаков во втором действии насвистывает что-то из неё, потом он же утверждает, что именно он является автором романа, лёгшего в основу либретто этой оперы. Назовите её.''',
-                            hints=[
-                                'Название оперы'
-                            ])
+                           next=4,
+                           question='''В тексте "Ревизора" дважды упоминается одна французская опера в пяти актах, поставленная в 1831 году. Первый раз Хлестаков во втором действии насвистывает что-то из неё, потом он же утверждает, что именно он является автором романа, лёгшего в основу либретто этой оперы. Назовите её.''',
+                           hints=[
+                               'Название оперы'
+                           ])
+
 
 @app.route('/4', methods=['POST'])
 def q4():
@@ -63,11 +71,12 @@ def q4():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=5,
-                            question='У кого квартальный стянул всю штуку сукна?',
-                            hints=[
-                                'Фамилия'
-                            ])
+                           next=5,
+                           question='У кого квартальный стянул всю штуку сукна?',
+                           hints=[
+                               'Фамилия'
+                           ])
+
 
 @app.route('/5', methods=['POST'])
 def q5():
@@ -76,27 +85,29 @@ def q5():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=6,
-                            question='Вставьте пропущенные слова в реплику городничего: "Я раз слушал его: ну, покамест говорил об ... и ...- ещё ничего, а как добрался до Александра Македонского, то я не могу вам сказать, что с ним сделалось"',
-                            hints=[
-                                'Первый пропуск',
-                                'Второй пропуск'
-                            ])
+                           next=6,
+                           question='Вставьте пропущенные слова в реплику городничего: "Я раз слушал его: ну, покамест говорил об ... и ...- ещё ничего, а как добрался до Александра Македонского, то я не могу вам сказать, что с ним сделалось"',
+                           hints=[
+                               'Первый пропуск',
+                               'Второй пропуск'
+                           ])
+
 
 @app.route('/6', methods=['POST'])
 def q6():
     if equal(request.form['Первый пропуск'], "ассирянин"):
         session['answers'] += 1
     if equal(request.form['Второй пропуск'], "вавилонянин"):
-        session['answers'] += 
+        session['answers'] +=
     print(session['answers'])
 
     return render_template('question.html',
-                            next=7,
-                            question='Назовите фамилию купца, который не прислал городничему новую шпагу.',
-                            hints=[
-                                'Фамилия'
-                            ])
+                           next=7,
+                           question='Назовите фамилию купца, который не прислал городничему новую шпагу.',
+                           hints=[
+                               'Фамилия'
+                           ])
+
 
 @app.route('/7', methods=['POST'])
 def q7():
@@ -105,11 +116,12 @@ def q7():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=8,
-                            question='Сколько Хлестаков взял в долг у Луки Лукича?',
-                            hints=[
-                                'Сумма'
-                            ])
+                           next=8,
+                           question='Сколько Хлестаков взял в долг у Луки Лукича?',
+                           hints=[
+                               'Сумма'
+                           ])
+
 
 @app.route('/8', methods=['POST'])
 def q8():
@@ -117,11 +129,12 @@ def q8():
         session['answers'] += 1
 
     return render_template('question.html',
-                            next=9,
-                            question='Кем работает Ляпкин-Тяпкин?',
-                            hints=[
-                                'Профессия'
-                            ])
+                           next=9,
+                           question='Кем работает Ляпкин-Тяпкин?',
+                           hints=[
+                               'Профессия'
+                           ])
+
 
 @app.route('/9', methods=['POST'])
 def q9():
@@ -130,12 +143,13 @@ def q9():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=10,
-                            question='Кто из чиновников или помещиков многодетный? Сколько у него детей?',
-                            hints=[
-                                'Имя',
-                                'Количество детей'
-                            ])
+                           next=10,
+                           question='Кто из чиновников или помещиков многодетный? Сколько у него детей?',
+                           hints=[
+                               'Имя',
+                               'Количество детей'
+                           ])
+
 
 @app.route('/10', methods=['POST'])
 def q10():
@@ -146,11 +160,12 @@ def q10():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=11,
-                            question='Кто среди чиновников является доносчиком?',
-                            hints=[
-                                'Имя'
-                            ])
+                           next=11,
+                           question='Кто среди чиновников является доносчиком?',
+                           hints=[
+                               'Имя'
+                           ])
+
 
 @app.route('/11', methods=['POST'])
 def q11():
@@ -159,12 +174,13 @@ def q11():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=12,
-                            question='Назовите грехи городничего.\n(Двух хватит)',
-                            hints=[
-                                'Первый',
-                                'Второй'
-                            ])
+                           next=12,
+                           question='Назовите грехи городничего.\n(Двух хватит)',
+                           hints=[
+                               'Первый',
+                               'Второй'
+                           ])
+
 
 @app.route('/12', methods=['POST'])
 def q12():
@@ -175,11 +191,12 @@ def q12():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=13,
-                            question='Назовите фамилию Луки Лукича.',
-                            hints=[
-                                'Фамилия'
-                            ])
+                           next=13,
+                           question='Назовите фамилию Луки Лукича.',
+                           hints=[
+                               'Фамилия'
+                           ])
+
 
 @app.route('/13', methods=['POST'])
 def q13():
@@ -188,11 +205,12 @@ def q13():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=14,
-                            question='Назовите чин Луки Лукича\n(Подсказка: чин - это не профессия).',
-                            hints=[
-                                'Чин'
-                            ])
+                           next=14,
+                           question='Назовите чин Луки Лукича\n(Подсказка: чин - это не профессия).',
+                           hints=[
+                               'Чин'
+                           ])
+
 
 @app.route('/14', methods=['POST'])
 def q14():
@@ -201,11 +219,12 @@ def q14():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=15,
-                            question='Вставьте пропущенное название цвета в фразу Марьи Антоновны:\n"Ах, маменька, Вам нейдёт ...".',
-                            hints=[
-                                'Цвет'
-                            ])
+                           next=15,
+                           question='Вставьте пропущенное название цвета в фразу Марьи Антоновны:\n"Ах, маменька, Вам нейдёт ...".',
+                           hints=[
+                               'Цвет'
+                           ])
+
 
 @app.route('/15', methods=['POST'])
 def q15():
@@ -214,11 +233,12 @@ def q15():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=16,
-                            question='А какая фамилия у Марьи Антоновны?',
-                            hints=[
-                                'Фамилия'
-                            ])
+                           next=16,
+                           question='А какая фамилия у Марьи Антоновны?',
+                           hints=[
+                               'Фамилия'
+                           ])
+
 
 @app.route('/16', methods=['POST'])
 def q16():
@@ -227,11 +247,12 @@ def q16():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=17,
-                            question='Когда Бобчинский, рассказывая о первой встресе с Хлестаковым, говорит о том,что он встретился с Петром Ивановичем, Добчинский его перебивает и называет точное место встречи - это будка. А что в ней продавалось?',
-                            hints=[
-                                'Товар'
-                            ])
+                           next=17,
+                           question='Когда Бобчинский, рассказывая о первой встресе с Хлестаковым, говорит о том,что он встретился с Петром Ивановичем, Добчинский его перебивает и называет точное место встречи - это будка. А что в ней продавалось?',
+                           hints=[
+                               'Товар'
+                           ])
+
 
 @app.route('/17', methods=['POST'])
 def q17():
@@ -240,11 +261,12 @@ def q17():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=18,
-                            question='Какую рыбу ели Петры Ивановичи в трактире, в котором жил Хлестаков в начале комедии.',
-                            hints=[
-                                'Название рыбы'
-                            ])
+                           next=18,
+                           question='Какую рыбу ели Петры Ивановичи в трактире, в котором жил Хлестаков в начале комедии.',
+                           hints=[
+                               'Название рыбы'
+                           ])
+
 
 @app.route('/18', methods=['POST'])
 def q18():
@@ -253,11 +275,12 @@ def q18():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=19,
-                            question='Как звали трактирщика?',
-                            hints=[
-                                'Имя'
-                            ])
+                           next=19,
+                           question='Как звали трактирщика?',
+                           hints=[
+                               'Имя'
+                           ])
+
 
 @app.route('/19', methods=['POST'])
 def q19():
@@ -266,11 +289,12 @@ def q19():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=20,
-                            question='В день какого выдуманного Гоголем святого в город приехал Хлестаков?',
-                            hints=[
-                                'Имя'
-                            ])
+                           next=20,
+                           question='В день какого выдуманного Гоголем святого в город приехал Хлестаков?',
+                           hints=[
+                               'Имя'
+                           ])
+
 
 @app.route('/20', methods=['POST'])
 def q20():
@@ -279,11 +303,12 @@ def q20():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=21,
-                            question='Во сколько рублей обходится арбуз на балах Хлестакова?\n(По словам самого Хлестакова)',
-                            hints=[
-                                'Цена'
-                            ])
+                           next=21,
+                           question='Во сколько рублей обходится арбуз на балах Хлестакова?\n(По словам самого Хлестакова)',
+                           hints=[
+                               'Цена'
+                           ])
+
 
 @app.route('/21', methods=['POST'])
 def q21():
@@ -292,11 +317,12 @@ def q21():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=22,
-                            question='Что, кроме супа, принесли Хлестакову в трактире, когда обещали, что это будет последний обед, пока он не заплатит?',
-                            hints=[
-                                'Название блюда'
-                            ])
+                           next=22,
+                           question='Что, кроме супа, принесли Хлестакову в трактире, когда обещали, что это будет последний обед, пока он не заплатит?',
+                           hints=[
+                               'Название блюда'
+                           ])
+
 
 @app.route('/22', methods=['POST'])
 def q22():
@@ -305,11 +331,12 @@ def q22():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=23,
-                            question='Кто в немой сцене стоит "посередине, в виде столба, с распростертыми руками и запрокинутой назад головою"?',
-                            hints=[
-                                'Кто?'
-                            ])
+                           next=23,
+                           question='Кто в немой сцене стоит "посередине, в виде столба, с распростертыми руками и запрокинутой назад головою"?',
+                           hints=[
+                               'Кто?'
+                           ])
+
 
 @app.route('/23', methods=['POST'])
 def q23():
@@ -318,11 +345,12 @@ def q23():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=24,
-                            question='По мнению Земляники смотритель училища хуже, чем ...',
-                            hints=[
-                                'Кто?'
-                            ])
+                           next=24,
+                           question='По мнению Земляники смотритель училища хуже, чем ...',
+                           hints=[
+                               'Кто?'
+                           ])
+
 
 @app.route('/24', methods=['POST'])
 def q24():
@@ -331,11 +359,12 @@ def q24():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=25,
-                            question='Кто сказал: "Я прошу вас покорнейше, как поедете в Петербург, скажите всем там вельможам разным: сенаторам и адмиралам, что вот, живет в таком-то городе .... Так и скажите: живет ...."',
-                            hints=[
-                                'Фамилия'
-                            ])
+                           next=25,
+                           question='Кто сказал: "Я прошу вас покорнейше, как поедете в Петербург, скажите всем там вельможам разным: сенаторам и адмиралам, что вот, живет в таком-то городе .... Так и скажите: живет ...."',
+                           hints=[
+                               'Фамилия'
+                           ])
+
 
 @app.route('/25', methods=['POST'])
 def q25():
@@ -344,11 +373,12 @@ def q25():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=26,
-                            question='Именное повеление - чье?',
-                            hints=[
-                                'Чье?'
-                            ])
+                           next=26,
+                           question='Именное повеление - чье?',
+                           hints=[
+                               'Чье?'
+                           ])
+
 
 @app.route('/26', methods=['POST'])
 def q26():
@@ -357,11 +387,12 @@ def q26():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=27,
-                            question='Куда Хлестаков написал письмо Тряпичкину?',
-                            hints=[
-                                'Место'
-                            ])
+                           next=27,
+                           question='Куда Хлестаков написал письмо Тряпичкину?',
+                           hints=[
+                               'Место'
+                           ])
+
 
 @app.route('/27', methods=['POST'])
 def q27():
@@ -370,11 +401,12 @@ def q27():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=28,
-                            question='Возможный прообраз Хлестакова.',
-                            hints=[
-                                'Фамилия'
-                            ])
+                           next=28,
+                           question='Возможный прообраз Хлестакова.',
+                           hints=[
+                               'Фамилия'
+                           ])
+
 
 @app.route('/28', methods=['POST'])
 def q28():
@@ -383,11 +415,12 @@ def q28():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=29,
-                            question='Кто сказал "Так уж сделайте такую милость, ваше сиятельство. Если уже вы, то есть, не поможете в нашей просьбе, то уж не знаем, как и быть: просто хоть в петлю полезай"',
-                            hints=[
-                                'Профессия'
-                            ])
+                           next=29,
+                           question='Кто сказал "Так уж сделайте такую милость, ваше сиятельство. Если уже вы, то есть, не поможете в нашей просьбе, то уж не знаем, как и быть: просто хоть в петлю полезай"',
+                           hints=[
+                               'Профессия'
+                           ])
+
 
 @app.route('/29', methods=['POST'])
 def q29():
@@ -396,12 +429,13 @@ def q29():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=30,
-                            question='Из какого города едет Хлестаков? В какой?',
-                            hints=[
-                                'Откуда?',
-                                'Куда?'
-                            ])
+                           next=30,
+                           question='Из какого города едет Хлестаков? В какой?',
+                           hints=[
+                               'Откуда?',
+                               'Куда?'
+                           ])
+
 
 @app.route('/30', methods=['POST'])
 def q30():
@@ -412,11 +446,12 @@ def q30():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=31,
-                            question='Сам не подозревая того, своим враньем Хлестаков выдал себя за...',
-                            hints=[
-                                'Чин'
-                            ])
+                           next=31,
+                           question='Сам не подозревая того, своим враньем Хлестаков выдал себя за...',
+                           hints=[
+                               'Чин'
+                           ])
+
 
 @app.route('/31', methods=['POST'])
 def q31():
@@ -425,11 +460,12 @@ def q31():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=32,
-                            question='Городничий и Хлестаков говорят об одном и том же при их первой встрече?',
-                            hints=[
-                                'Да/нет'
-                            ])
+                           next=32,
+                           question='Городничий и Хлестаков говорят об одном и том же при их первой встрече?',
+                           hints=[
+                               'Да/нет'
+                           ])
+
 
 @app.route('/32', methods=['POST'])
 def q32():
@@ -438,11 +474,12 @@ def q32():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=33,
-                            question='Кто из чиновников является масоном?',
-                            hints=[
-                                'Фамилия'
-                            ])
+                           next=33,
+                           question='Кто из чиновников является масоном?',
+                           hints=[
+                               'Фамилия'
+                           ])
+
 
 @app.route('/33', methods=['POST'])
 def q33():
@@ -451,11 +488,12 @@ def q33():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=34,
-                            question='Хлестаков получил взаймы больше ... рублей',
-                            hints=[
-                                'Сумма'
-                            ])
+                           next=34,
+                           question='Хлестаков получил взаймы больше ... рублей',
+                           hints=[
+                               'Сумма'
+                           ])
+
 
 @app.route('/34', methods=['POST'])
 def q34():
@@ -464,11 +502,12 @@ def q34():
     print(session['answers'])
 
     return render_template('question.html',
-                            next=35,
-                            question='Скольких губернаторов обманул городничий?',
-                            hints=[
-                                'Число'
-                            ])
+                           next=35,
+                           question='Скольких губернаторов обманул городничий?',
+                           hints=[
+                               'Число'
+                           ])
+
 
 @app.route('/35', methods=['POST'])
 def q35():
@@ -477,11 +516,12 @@ def q35():
     print(session['answers'])
 
     return render_template('question.html',
-                            next='results',
-                            question='Сколько лет провел на службе Антон Антонович',
-                            hints=[
+                           next='results',
+                           question='Сколько лет провел на службе Антон Антонович',
+                           hints=[
                                 'Число'
-                            ])
+                           ])
+
 
 @app.route('/results', methods=['POST'])
 def results():
@@ -491,9 +531,10 @@ def results():
     session['answers'] = 0
 
     return render_template('results.html',
-                            right=score,
-                            all=40,
-                            comment='')
+                           right=score,
+                           all=40,
+                           comment='')
+
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -504,11 +545,18 @@ def webhook():
         repo = git.Repo('./mysite')
         origin = repo.remotes.origin
         repo.create_head('master',
-    origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
-        origin.pull() # Test
+                         origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
+        origin.pull()  # Test
+        api_token = os.getenv('API_TOKEN')
+        headers = {'Authorization': f'Token {token}', }
+        url = '/api/v0/user/MrChAIKofE/webapps/MrChAIKofE.pythonanywhere.com/reload/'
+        t = threading.Thread(target=requests.post, args=(
+            url), kwargs=dict(headers=headers))
+        t.start()
         return '', 200
     else:
         return '', 400
+
 
 @app.route('/version')
 def get_version():
@@ -516,6 +564,7 @@ def get_version():
     Gets hash of last commit
     '''
     return git.Repo('./mysite').head.commit.hexsha
+
 
 app.secret_key = 'YouWillNeverGuessMySecretKey'
 
