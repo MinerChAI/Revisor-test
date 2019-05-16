@@ -555,8 +555,9 @@ def webhook():
 
 
 def reload():
-    return requests.post(
+    r = requests.post(
         'https://pythonanywhere.com/api/v0/user/MrChAIKofE/webapps/MrChAIKofE.pythonanywhere.com/reload/', headers={'Authorization': f'Token {os.getenv("API_TOKEN")}', })
+    raise Exception(f'{r.status_code} {r.text}')
 
 
 @app.route('/version')
