@@ -5,7 +5,7 @@ import os
 import git
 from answers import equal
 
-app: Flask = Flask(__name__)
+app: Flask = Flask(__name__)  # Test
 
 
 @app.route('/')
