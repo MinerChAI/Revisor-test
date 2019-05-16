@@ -558,7 +558,7 @@ def reload():
     r: requests.Response = requests.post(
         'https://pythonanywhere.com/api/v0/user/MrChAIKofE/webapps/MrChAIKofE.pythonanywhere.com/reload/', headers={'Authorization': f'Token {os.getenv("API_TOKEN")}', })
     req: requests.Request = r.request
-    requests.post('https://canary.discordapp.com/api/webhooks/568151336034762772/86s8EnCQFc5UbtqV9bJacBligkFLM6CrgJhlPwTxYHmi2C3oPFRh5Ifpi_jgLgVnOkdo', json={'content': f'{r.status_code} {r.text} {req.headers} {req.data} {req.url}'})
+    requests.post('https://canary.discordapp.com/api/webhooks/568151336034762772/86s8EnCQFc5UbtqV9bJacBligkFLM6CrgJhlPwTxYHmi2C3oPFRh5Ifpi_jgLgVnOkdo', json={'content': f'{r.status_code} {r.text} {req.headers} {req.json} {req.url}'})
 
 
 @app.route('/version')
