@@ -547,8 +547,7 @@ def webhook():
         repo.create_head('master',
                          origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
         origin.pull()  # Test
-        api_token = os.getenv('API_TOKEN')
-        headers = {'Authorization': f'Token {api_token}', }
+        headers = {'Authorization': f'Token {os.getenv("API_TOKEN")}', }
         url = '/api/v0/user/MrChAIKofE/webapps/MrChAIKofE.pythonanywhere.com/reload/'
         t = threading.Thread(target=requests.post, args=(
             url), kwargs=dict(headers=headers))
