@@ -6,7 +6,7 @@ from pythonanywhere_wrapper.client import PythonAnywhere
 import git
 from answers import equal
 
-app: Flask = Flask(__name__)  # Test
+app: Flask = Flask(__name__)
 
 app.config['client'] = PythonAnywhere(
     os.getenv('API_TOKEN'), user='MrChAIKofE')
