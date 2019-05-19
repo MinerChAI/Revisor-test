@@ -2,10 +2,14 @@ from flask import Flask, render_template, request, escape, session, copy_current
 import requests
 import threading
 import os
+from pythonanywhere_wrapper.client import PythonAnywhere
 import git
 from answers import equal
 
 app: Flask = Flask(__name__)  # Test
+
+app.config['client'] = PythonAnywhere(
+    os.getenv('API_TOKEN'), user='MrChAIKofE')
 
 
 @app.route('/')
@@ -555,10 +559,8 @@ def webhook():
 
 
 def reload():
-    r: requests.Response = requests.post(
-        'https://pythonanywhere.com/api/v0/user/MrChAIKofE/webapps/MrChAIKofE.pythonanywhere.com/reload/', headers={'Authorization': f'Token {os.getenv("API_TOKEN")}', })
-    req: requests.Request = r.request
-    requests.post('https://canary.discordapp.com/api/webhooks/568151336034762772/86s8EnCQFc5UbtqV9bJacBligkFLM6CrgJhlPwTxYHmi2C3oPFRh5Ifpi_jgLgVnOkdo', json={'content': f'{r.status_code} {r.text} {req.headers} {req.json} {req.url}'})
+    client: PythonAnywhere = app.config['client']
+    client.webapps.reload(domain_name='MrChAIKofE.pythonanywhere.com')
 
 
 @app.route('/version')
