@@ -19,7 +19,7 @@ def q0():
         session['answers'] = 0
     return render_template('question.html',
                            next=1,
-                           question='По какому произведению Вы проходите викторину? Кто автор произведения? $ echo Test5 > /dev/null/',
+                           question='По какому произведению Вы проходите викторину? Кто автор произведения?',
                            hints=[
                                'Название произведения',
                                'Автор'
